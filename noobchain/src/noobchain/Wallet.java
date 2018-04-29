@@ -7,7 +7,7 @@ public class Wallet {
 	public PrivateKey privateKey;
 	
 	public Wallet() {
-		
+		generateKeyPair();
 	}
 	
 	public void generateKeyPair() {

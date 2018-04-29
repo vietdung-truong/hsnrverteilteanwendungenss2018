@@ -2,17 +2,38 @@ package noobchain;
 
 import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
+import java.security.Security;
+import java.util.Base64;
+
 
 public class NoobChain {
 	
 	public static ArrayList<Block> blockchain = new ArrayList<Block>();
-
 	public static int dificulty = 2;
+	public static Wallet walletA;
+	public static Wallet walletB;
+	//adding 2 wallets after completing the StringUtil and Transaction
 
 	public static void main(String[] args) {
 		
 		
-		blockchain.add(new Block ("Hi im the first block", "0"));
+		//this is the second part added after compleating the transaction code
+		//please check bouncycastle API. It is not yet integrated
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+		walletA = new Wallet ();
+		walletB = new Wallet();
+		
+		System.out.println("Private and public keys:");
+		System.out.println(StringUtil.getStringFromKey(walletA.privateKey));
+		System.out.println(StringUtil.getStringFromKey(walletA.publicKey));
+		Transaction transaction = new Transaction (walletA.publicKey,walletB.publicKey, 5, null);
+		transaction.generateSignature(walletA.privateKey);
+		System.out.println("Is signature verified?");
+		System.out.println(transaction.verifySignature());
+		
+		
+		//this is the first part
+		/*blockchain.add(new Block ("Hi im the first block", "0"));
 		System.out.println("Trying to mine...");
 		blockchain.get(0).mineBlock(dificulty);
 		blockchain.add(new Block ("Yo im the second block and I have extra text for you",blockchain.get(blockchain.size()-1).hash));
@@ -26,7 +47,7 @@ public class NoobChain {
 		
 		System.out.println('\0');
 		System.out.println(blockchainJson);
-		
+		*/
 	
 	}
 	

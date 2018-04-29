@@ -28,6 +28,18 @@ public class Transaction {
 				StringUtil.getStringFromKey(sender) +
 				StringUtil.getStringFromKey(recipient) +
 				Float.toString(value) + sequence);
-		
 	}
+	
+	
+	//this was put after the expansion of StringUtil to ECDSA
+	public void generateSignature(PrivateKey privateKey) {
+		String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient);
+		signature = StringUtil.applyECDSASig(privateKey, data);
+	}
+	
+	public boolean verifySignature() {
+		String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient);
+		return StringUtil.verifyECDSASig(sender, data, signature);
+	}
+	
 }

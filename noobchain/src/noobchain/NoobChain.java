@@ -9,7 +9,7 @@ import java.util.Base64;
 public class NoobChain {
 	
 	public static ArrayList<Block> blockchain = new ArrayList<Block>();
-	public static int dificulty = 2;
+	public static int dificulty = 4;
 	public static Wallet walletA;
 	public static Wallet walletB;
 	//adding 2 wallets after completing the StringUtil and Transaction

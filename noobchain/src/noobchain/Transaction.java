@@ -42,4 +42,12 @@ public class Transaction {
 		return StringUtil.verifyECDSASig(sender, data, signature);
 	}
 	
+	public boolean processTransaction() {
+		if (verifySignature() == false) {
+			System.out.println("transaction signature is false");
+			return false;
+		}
+		
+		return true;
+	}
 }

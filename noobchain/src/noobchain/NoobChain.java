@@ -17,7 +17,7 @@ public class NoobChain {
 	public static void main(String[] args) {
 		
 		
-		//this is the second part added after compleating the transaction code
+		//this is the second part added after completing the transaction code
 		//please check bouncycastle API. It is not yet integrated
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		walletA = new Wallet ();

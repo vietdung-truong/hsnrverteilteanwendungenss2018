@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
 import java.security.Security;
 import java.util.Base64;
+import java.util.HashMap;
 
 
 public class NoobChain {
 	
 	public static ArrayList<Block> blockchain = new ArrayList<Block>();
-	public static int dificulty = 2;
+	public static HashMap<String,TransactionOutput> UTXOs = new HashMap <String,TransactionOutput>();
+	
+	public static int dificulty = 2; //Commit Test Mo 
 	public static Wallet walletA;
 	public static Wallet walletB;
 	//adding 2 wallets after completing the StringUtil and Transaction
@@ -17,7 +20,7 @@ public class NoobChain {
 	public static void main(String[] args) {
 		
 		
-		//this is the second part added after compleating the transaction code
+		//this is the second part added after completing the transaction code
 		//please check bouncycastle API. It is not yet integrated
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		walletA = new Wallet ();

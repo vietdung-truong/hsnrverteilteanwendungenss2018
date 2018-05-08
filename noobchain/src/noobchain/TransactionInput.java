@@ -10,4 +10,4 @@ public class TransactionInput {
 }
 
 //this class contains all of the input targeted to you, that
-//means how much coins you have
+//means how much coins you have to transact

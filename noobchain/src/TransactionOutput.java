@@ -1,4 +1,4 @@
-package noobchain;
+package src;
 
 import java.security.*;
 

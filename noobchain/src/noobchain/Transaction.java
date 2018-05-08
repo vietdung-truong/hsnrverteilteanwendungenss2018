@@ -48,6 +48,52 @@ public class Transaction {
 			return false;
 		}
 		
+		//gathering inputs
+		for (TransactionInput i : inputs) {
+			i.UTXO = NoobChain.UTXO.get(i.transactionOutputID);
+		}
+		
+		//is the transaction valid?
+		if(getInputsValue() < NoobChain.minimunTransaction) {
+			System.out.println("#Transaction Input too small:" + getInputsValue());
+			return false;
+		}
+		
+		//generate transaction outputs
+		float LeftOver = getInputsValue() - value;
+		transactionID = calculateHashj();
+		outputs.add(new TransactionOutput(this.recipient, value, transactionID)); //send value to recipient
+		outputs.add(new TransactionOutput(this.sender, LeftOver, transactionID)); //get "changes" back
+		
+		//add to unspent list
+		for (TransactionOutput o : outputs) {
+			NoobChain.UTXOd.out(o.id, o);
+		}
+		
+		for(TransactionInput i = inputs) {
+			if(i.UTXO == null) continue;
+			NoobChain.UTXOs.remove(i.UTXO.id);
+		}
+		
 		return true;
+	}
+	
+	//get the number of unspent input
+	public float getInputsValue() {
+		float total = 0;
+		for(TransactionInput i : inputs) {
+			if(i.UTXO == null) continue;
+			total += i.UTXO.value;
+		}
+		return total;
+	}
+	
+	public float getOutputsValue() {
+		float total = 0;
+		for(TransactionOutput o : outputs)
+		{
+			total += o.value;
+		}
+		return total;
 	}
 }

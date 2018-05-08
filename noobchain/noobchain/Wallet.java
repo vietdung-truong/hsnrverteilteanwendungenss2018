@@ -1,4 +1,4 @@
-package src;
+package noobchain;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;

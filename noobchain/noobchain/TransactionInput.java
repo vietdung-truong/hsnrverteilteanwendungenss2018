@@ -1,4 +1,4 @@
-package src;
+package noobchain;
 
 public class TransactionInput {
 	public String transactionOutputId;

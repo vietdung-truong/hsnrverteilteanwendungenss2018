@@ -9,7 +9,7 @@ public class Wallet {
 		public PublicKey publicKey;
 		public PrivateKey privateKey;
 		
-		public HashMap<String,TransactionOutput> UTXOs = new HashMap<String.TransactionOutput>();
+		public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 		
 		public Wallet() {
 			generateKeyPair();
@@ -32,7 +32,7 @@ public class Wallet {
 	
 	public float getBalance() {
 		float total = 0;
-		for(Map.Entry<String, TransactionOutput> item: NoobChain.UTXO.entrySet()) {
+		for(Map.Entry<String, TransactionOutput> item: NoobChain.UTXOs.entrySet()) {
 			TransactionOutput UTXO = item.getValue();
 			if(UTXO.isMine(publicKey)) {// does this belong to me?
 				UTXOs.put(UTXO.ID, UTXO);

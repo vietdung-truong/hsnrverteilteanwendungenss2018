@@ -18,7 +18,7 @@ public class NoobChain {
 	public static Wallet walletB;
 	//adding 2 wallets after completing the StringUtil and Transaction
 	public static Transaction genesisTransaction;
-	//added after compleating transaction. This is the ammount of money released
+	//added after completing transaction. This is the ammount of money released
 
 	public static void main(String[] args) {
 		

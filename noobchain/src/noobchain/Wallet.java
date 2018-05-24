@@ -2,14 +2,14 @@ package noobchain;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
-import java.util.Haskmap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Wallet {
 		public PublicKey publicKey;
 		public PrivateKey privateKey;
 		
-		public HashMap<String,TransactionOutput> UTXOs = new HashMap<String.TransactionOutput>();
+		public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
 		
 		public Wallet() {
 			generateKeyPair();
@@ -28,14 +28,14 @@ public class Wallet {
 			throw new RuntimeException(e);
 		}
 	}
-	}
+	
 	
 	public float getBalance() {
 		float total = 0;
-		for(Map.Entry<String, TransactionOutput> item: NoobChain.UTXO.entrySet()) {
-			TransactionOuput UTXO = item.getValue();
+		for(Map.Entry<String, TransactionOutput> item: NoobChain.UTXOs.entrySet()) {
+			TransactionOutput UTXO = item.getValue();
 			if(UTXO.isMine(publicKey)) {// does this belong to me?
-				UTXOs.put(UTXO.id, UTXO);
+				UTXOs.put(UTXO.ID, UTXO);
 				total += UTXO.value;
 			}
 		}
@@ -54,7 +54,7 @@ public class Wallet {
 		for (Map.Entry<String, TransactionOutput> item: UTXOs.entrySet()){
 			TransactionOutput UTXO = item.getValue();
 			total += UTXO.value;
-			inputs.add(new TransactionInput(UTXO.id));
+			inputs.add(new TransactionInput(UTXO.ID));
 			if(total > value) break;
 		}
 		

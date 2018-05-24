@@ -14,7 +14,7 @@ public class Transaction {
 	
 	private static int sequence = 0;
 	
-	//Konstruktor
+	//Constructor
 	public Transaction(PublicKey from, PublicKey to, float value, ArrayList<TransactionInput> inputs) {
 		this.sender = from;
 		this.recipient = to;
@@ -50,29 +50,29 @@ public class Transaction {
 		
 		//gathering inputs
 		for (TransactionInput i : inputs) {
-			i.UTXO = NoobChain.UTXO.get(i.transactionOutputID);
+			i.UTXO = NoobChain.UTXOs.get(i.transactionOutputId);
 		}
 		
 		//is the transaction valid?
-		if(getInputsValue() < NoobChain.minimunTransaction) {
+		if(getInputsValue() < NoobChain.minimumTransaction) {
 			System.out.println("#Transaction Input too small:" + getInputsValue());
 			return false;
 		}
 		
 		//generate transaction outputs
 		float LeftOver = getInputsValue() - value;
-		transactionID = calculateHashj();
+		transactionID = calculateHash();
 		outputs.add(new TransactionOutput(this.recipient, value, transactionID)); //send value to recipient
 		outputs.add(new TransactionOutput(this.sender, LeftOver, transactionID)); //get "changes" back
 		
 		//add to unspent list
 		for (TransactionOutput o : outputs) {
-			NoobChain.UTXOd.out(o.id, o);
+			NoobChain.UTXOs.put(o.ID, o);
 		}
 		
-		for(TransactionInput i = inputs) {
+		for(TransactionInput i : inputs) {
 			if(i.UTXO == null) continue;
-			NoobChain.UTXOs.remove(i.UTXO.id);
+			NoobChain.UTXOs.remove(i.UTXO.ID);
 		}
 		
 		return true;

@@ -12,12 +12,13 @@ public class NoobChain {
 	public static ArrayList<Block> blockchain = new ArrayList<Block>();
 	public static HashMap<String,TransactionOutput> UTXOs = new HashMap <String,TransactionOutput>();
 	
-	public static int dificulty = 4; //Commit Test Mo 
+	public static int dificulty = 5; //Commit Test Mo
+	public static float minimumTransaction = 0.1f;
 	public static Wallet walletA;
 	public static Wallet walletB;
 	//adding 2 wallets after completing the StringUtil and Transaction
 	public static Transaction genesisTransaction;
-	//added after compleating transaction. This is the ammount of money released
+	//added after completing transaction. This is the ammount of money released
 
 	public static void main(String[] args) {
 		
@@ -31,11 +32,15 @@ public class NoobChain {
 		
 		
 		//copied due to lack of time
-		genesisTransaction = new Transaction(coinbase.publicKey, walletA.publicKey, 100f, null);
-		genesisTransaction.generateSignature(coinbase.privateKey);	 //manually sign the genesis transaction	
-		genesisTransaction.transactionId = "0"; //manually set the transaction id
-		genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.reciepient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
-		UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //its important to store our first transaction in the UTXOs list.
+		genesisTransaction = new Transaction(Coinbase.publicKey, walletA.publicKey, 100f, null);
+		genesisTransaction.generateSignature(Coinbase.privateKey);	 //manually sign the genesis transaction	
+		genesisTransaction.transactionID = "0"; //manually set the transaction id
+		genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value, genesisTransaction.transactionID)); //manually add the Transactions Output
+		UTXOs.put(genesisTransaction.outputs.get(0).ID, genesisTransaction.outputs.get(0)); //its important to store our first transaction in the UTXOs list.
+		
+		Block genesis = new Block("0");
+		genesis.addTransaction(genesisTransaction);
+		addBlock(genesis);
 		
 		
 		//testing transaction
@@ -96,7 +101,7 @@ public class NoobChain {
 		Block previousBlock;
 		String hashTarget = new String(new char[dificulty]).replace('\0', '0');
 		HashMap<String,TransactionOutput> tempUTXOs = new HashMap<String,TransactionOutput>(); //a temporary working list of unspent transactions at a given block state.
-		tempUTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
+		tempUTXOs.put(genesisTransaction.outputs.get(0).ID, genesisTransaction.outputs.get(0));
 		
 		//loop through blockchain to check hashes:
 			for (int i = 1; i < blockchain.size(); i++) {
@@ -119,7 +124,7 @@ public class NoobChain {
 			for(int t=0; t <currentBlock.transactions.size(); t++) {
 				Transaction currentTransaction = currentBlock.transactions.get(t);
 				
-				if(!currentTransaction.verifiySignature()) {
+				if(!currentTransaction.verifySignature()) {
 					System.out.println("#Signature on Transaction(" + t + ") is Invalid");
 					return false; 
 				}
@@ -145,14 +150,14 @@ public class NoobChain {
 				}
 				
 				for(TransactionOutput output: currentTransaction.outputs) {
-					tempUTXOs.put(output.id, output);
+					tempUTXOs.put(output.ID, output);
 				}
 				
-				if( currentTransaction.outputs.get(0).reciepient != currentTransaction.reciepient) {
+				if( currentTransaction.outputs.get(0).recipient != currentTransaction.recipient) {
 					System.out.println("#Transaction(" + t + ") output reciepient is not who it should be");
 					return false;
 				}
-				if( currentTransaction.outputs.get(1).reciepient != currentTransaction.sender) {
+				if( currentTransaction.outputs.get(1).recipient != currentTransaction.sender) {
 					System.out.println("#Transaction(" + t + ") output 'change' is not sender.");
 					return false;
 				}
@@ -165,12 +170,8 @@ public class NoobChain {
 	}
 	
 	public static void addBlock(Block newBlock) {
-		newBlock.mineBlock(difficulty);
+		newBlock.mineBlock(dificulty);
 		blockchain.add(newBlock);
-	}
-}
-		}
-		return true;
 	}
 	
 }

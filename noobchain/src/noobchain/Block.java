@@ -1,8 +1,6 @@
-
-
-
 package noobchain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Block {
@@ -16,7 +14,7 @@ public class Block {
 	public String previoushash;
 	public String merkleRoot;
 	public ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-	private String data;
+	//private String data;
 	private long timeStamp; //time of creation of the block
 	private int nonce;
 	
@@ -52,7 +50,7 @@ public class Block {
 		public boolean addTransaction(Transaction transaction) {
 			//process transaction and check if valid, unless block is genesis block then ignore.
 			if(transaction == null) return false;		
-			if((previousHash != "0")) {
+			if((previoushash != "0")) {
 				if((transaction.processTransaction() != true)) {
 					System.out.println("Transaction failed to process. Discarded.");
 					return false;

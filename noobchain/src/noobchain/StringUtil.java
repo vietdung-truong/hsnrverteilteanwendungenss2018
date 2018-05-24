@@ -1,6 +1,7 @@
 package noobchain;
 
 import java.security.*;
+import java.util.ArrayList;
 import java.util.Base64;
 
 public class StringUtil {
@@ -51,7 +52,6 @@ public class StringUtil {
 	}
 
 	public static String getStringFromKey(Key key) {
-		// TODO Auto-generated method stub
 		//Created after Editing Transaction
 		return Base64.getEncoder().encodeToString(key.getEncoded());
 	}
@@ -62,7 +62,7 @@ public class StringUtil {
 		int count = transactions.size();
 		ArrayList<String> previousTreeLayer = new ArrayList<String>();
 		for(Transaction transaction : transactions) {
-			previousTreeLayer.add(transaction.transactionId);
+			previousTreeLayer.add(transaction.transactionID);
 		}
 		ArrayList<String> treeLayer = previousTreeLayer;
 		while(count > 1) {
